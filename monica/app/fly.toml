@@ -1,0 +1,64 @@
+app = "monica-app"
+
+kill_signal = "SIGINT"
+kill_timeout = 5
+processes = []
+
+[experimental]
+  allowed_public_ports = []
+  auto_rollback = true
+
+[env]
+  APP_ENV="production"
+  APP_DEBUG="false"
+  HASH_LENGTH="18"
+  APP_URL="https://monica.gall.family"
+  APP_FORCE_URL="false"
+  DB_CONNECTION="mysql"
+  DB_HOST="[fdaa:0:2056:a7b:276d:0:7fb3:2]"
+  DB_PORT="3306"
+  DB_USERNAME="monica"
+  DB_USE_UTF8MB4="true"
+  MAIL_MAILER="smtp"
+  MAIL_HOST="smtp.mailgun.org"
+  MAIL_PORT="25"
+  MAIL_USERNAME="monica@no-reply.gall.family"
+  MAIL_FROM_ADDRESS="monica@no-reply.gall.family"
+  MAIL_FROM_NAME="monica.gall.family"
+  APP_DISABLE_SIGNUP="true"
+  APP_TRUSTED_CLOUDFLARE="true"
+  LOG_CHANNEL="stderr"
+  CHECK_VERSION="true"
+  CACHE_DRIVER="redis"
+  SESSION_DRIVER="redis"
+  SESSION_LIFETIME="120"
+  QUEUE_CONNECTION="redis"
+  REDIS_HOST="monica-redis.internal"
+  DEFAULT_MAX_UPLOAD_SIZE="10240"
+  DEFAULT_MAX_STORAGE_SIZE="10240"
+  DEFAULT_FILESYSTEM="s3"
+  S3_PATH_STYLE="true"
+  MFA_ENABLED="true"
+  DAV_ENABLED="true"
+  ALLOW_STATISTICS_THROUGH_PUBLIC_API_ACCESS="false"
+  POLICY_COMPLIANT="true"
+  ENABLE_GEOLOCATION="true"
+  ENABLE_WEATHER="false"
+  FILESYSTEM_DEFAULT_VISIBILITY="public"
+  RATE_LIMIT_PER_MINUTE_API="900"
+  RATE_LIMIT_PER_MINUTE_OAUTH="900"
+
+[[services]]
+  internal_port = 9000
+  protocol = "tcp"
+
+  [services.concurrency]
+    hard_limit = 50
+    soft_limit = 45
+    type = "connections"
+
+  [[services.tcp_checks]]
+    grace_period = "1s"
+    interval = "15s"
+    restart_limit = 0
+    timeout = "2s"
