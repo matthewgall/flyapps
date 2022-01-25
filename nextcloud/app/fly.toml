@@ -1,0 +1,38 @@
+app = "nextcloud-app"
+
+kill_signal = "SIGINT"
+kill_timeout = 5
+processes = []
+
+[build]
+  image = "nextcloud:fpm-alpine"
+
+[env]
+  MYSQL_HOST = "nextcloud-db.internal"
+  MYSQL_USER = "nextcloud"
+  MYSQL_DATABASE = "nextcloud"
+  REDIS_HOST = "nextcloud-redis.internal"
+  NEXTCLOUD_TRUSTED_DOMAINS = "nextcloud-app.fly.dev"
+
+[experimental]
+  allowed_public_ports = []
+  auto_rollback = true
+
+[[services]]
+  internal_port = 9000
+  protocol = "tcp"
+
+  [services.concurrency]
+    hard_limit = 150
+    soft_limit = 100
+    type = "connections"
+
+  [[services.tcp_checks]]
+    grace_period = "1s"
+    interval = "15s"
+    restart_limit = 0
+    timeout = "2s"
+
+[mounts]
+  source = "data"
+  destination = "/var/www/html"
