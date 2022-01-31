@@ -1,7 +1,6 @@
 FROM binwiederhier/ntfy:latest
 # Copy in our configuration
 COPY entrypoint.sh /etc/ntfy/entrypoint.sh
-COPY server.yml /etc/ntfy/server.yml.tpl
 # Install dependencies
 RUN apk add --no-cache supervisor && \
     apk add --no-cache -X http://dl-cdn.alpinelinux.org/alpine/edge/testing \
