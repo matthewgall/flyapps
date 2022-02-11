@@ -1,0 +1,50 @@
+app = "vaultwarden-app"
+
+kill_signal = "SIGINT"
+kill_timeout = 5
+processes = []
+
+[env]
+  DATABASE_URL = "mysql://vaultwarden:vaultwarden@vaultwarden-db.internal:3306/vaultwarden"
+  DATABASE_MAX_CONNS = "10"
+  DB_CONNECTION_RETRIES = "0"
+  DISABLE_ICON_DOWNLOAD = "true"
+  DOMAIN = "https://vaultwarden.gall.family"
+  ENABLE_DB_WAL = "false"
+  ICON_CACHE_TTL = "0"
+  IP_HEADER = "X-Forwarded-For"
+  ROCKET_WORKERS = "100"
+  RSA_KEY_FILENAME = "/secrets/rsa_key"
+  SHOW_PASSWORD_HINT = "false"
+  SIGNUPS_ALLOWED = "false"
+  SMTP_FROM_NAME = "vaultwarden"
+  SMTP_PORT = "587"
+  SMTP_SSL = "true"
+  WEBSOCKET_ENABLED = "false"
+
+[experimental]
+  allowed_public_ports = []
+  auto_rollback = true
+
+[[services]]
+  internal_port = 80
+  protocol = "tcp"
+
+  [[services.ports]]
+    handlers = ["http"]
+    port = "80"
+
+  [[services.ports]]
+    handlers = ["tls", "http"]
+    port = "443"
+
+  [services.concurrency]
+    hard_limit = 150
+    soft_limit = 100
+    type = "connections"
+
+  [[services.tcp_checks]]
+    grace_period = "1s"
+    interval = "15s"
+    restart_limit = 0
+    timeout = "2s"
