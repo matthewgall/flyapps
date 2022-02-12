@@ -1,4 +1,4 @@
-FROM vaultwarden/server:1.23.0
+FROM vaultwarden/server:1.24.0
 
 # Add our secrets
 COPY rsa_key.pem /secrets/rsa_key.pem
