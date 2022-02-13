@@ -6,7 +6,7 @@ processes = []
 
 [env]
   HOST = "0.0.0.0"
-  REDIS = "redis://asnjson-redis.internal:6379/0"
+  REDIS = "redis://redis-shared.internal:6379/0"
 
 [build]
   image = "matthewgall/asnjson.com:latest"
