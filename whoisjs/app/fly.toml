@@ -1,4 +1,4 @@
-app = "asnjson"
+app = "whoisjs"
 
 kill_signal = "SIGINT"
 kill_timeout = 5
@@ -6,10 +6,12 @@ processes = []
 
 [env]
   HOST = "0.0.0.0"
-  REDIS = "redis://protojson-redis.internal:6379/0"
+  REDIS = "redis://protojson-shared.internal:6379/1"
+  REDIS_TTL = "604800"
+  ENGINE = "paste"
 
 [build]
-  image = "matthewgall/asnjson.com:latest"
+  image = "matthewgall/whoisjs.com:edge"
 
 [experimental]
   allowed_public_ports = []
